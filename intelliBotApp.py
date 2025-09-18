@@ -2,6 +2,7 @@ import streamlit as st
 from snowflake.core import Root # requires snowflake>=0.8.0
 from snowflake.cortex import complete
 from snowflake.snowpark import Session
+from snowflake.snowpark.context import get_active_session
 
 
 
