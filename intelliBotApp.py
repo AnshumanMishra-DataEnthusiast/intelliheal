@@ -18,7 +18,7 @@ def init_messages():
     conversation should be cleared or if the "messages" key is not in the session state,
     initialize it as an empty list.
     """
-    session = get_snowflake_session()
+    session = get_active_session()
     if st.session_state.get("clear_conversation", False) or "messages" not in st.session_state:
         st.session_state.messages = []
 
@@ -29,7 +29,7 @@ def init_service_metadata():
     Initialize the session state for cortex search service metadata.
     Runs only once and ensures a default service is always selected.
     """
-    session = get_snowflake_session()
+    session = get_active_session()
     if "service_metadata" not in st.session_state:
         services = session.sql("SHOW CORTEX SEARCH SERVICES IN SCHEMA POLICYBOT_DB.EMPLOYEE;").collect()
         service_metadata = []
@@ -62,7 +62,7 @@ def init_config_options():
     Allows selecting a cortex search service, clearing conversation,
     toggling debug mode, and setting advanced options.
     """
-    session = get_snowflake_session()
+    session = get_active_session()
     with st.expander("⚙️ Settings", expanded=False):
         service_names = [s["name"] for s in st.session_state.service_metadata]
 
@@ -109,7 +109,7 @@ def query_cortex_search_service(query, columns = [], filter={}):
     Returns:
         str: The concatenated string of context documents.
     """
-    session = get_snowflake_session()
+    session = get_active_session()
     db, schema = session.get_current_database(), session.get_current_schema()
 
     cortex_search_service = (
@@ -145,7 +145,7 @@ def get_chat_history():
     Returns:
         list: The list of chat messages from the session state.
     """
-    session = get_snowflake_session()
+    session = get_active_session()
     start_index = max(
         0, len(st.session_state.messages) - st.session_state.num_chat_messages
     )
@@ -163,7 +163,7 @@ def completee(model, prompt):
     Returns:
         str: The generated completion.
     """
-    session = get_snowflake_session()
+    session = get_active_session()
     return complete(model, prompt).replace("$", r"\$")
 
 
@@ -179,7 +179,7 @@ def make_chat_history_summary(chat_history, question):
     Returns:
         str: The generated summary of the chat history and question.
     """
-    session = get_snowflake_session()
+    session = get_active_session()
     prompt = f"""
         [INST]
         Based on the chat history below and the question, generate a query that extend the question
@@ -217,7 +217,7 @@ def create_prompt(user_question):
     Returns:
         str: The generated prompt for the language model.
     """
-    session = get_snowflake_session()
+    session = get_active_session()
     if st.session_state.use_chat_history:
         chat_history = get_chat_history()
         if chat_history != []:
@@ -278,7 +278,7 @@ def main():
 
     icons = {"assistant": "💬", "user": "👤"}
      
-    session = get_snowflake_session()
+    session = get_active_session()
     # Display chat messages from history on app rerun
     for message in st.session_state.messages:
         with st.chat_message(message["role"], avatar=icons[message["role"]]):
