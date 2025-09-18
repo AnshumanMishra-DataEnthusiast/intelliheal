@@ -1,6 +1,6 @@
 import streamlit as st
 from snowflake.core import Root # requires snowflake>=0.8.0
-from snowflake.cortex import Complete
+from snowflake.cortex import complete
 from snowflake.snowpark import Session
 
 
@@ -152,7 +152,7 @@ def get_chat_history():
     return st.session_state.messages[start_index : len(st.session_state.messages) - 1]
 
 
-def complete(model, prompt):
+def completee(model, prompt):
     """
     Generate a completion for the given prompt using the specified model.
 
@@ -164,7 +164,7 @@ def complete(model, prompt):
         str: The generated completion.
     """
     session = get_snowflake_session()
-    return Complete(model, prompt).replace("$", r"\$")
+    return complete(model, prompt).replace("$", r"\$")
 
 
 def make_chat_history_summary(chat_history, question):
@@ -195,7 +195,7 @@ def make_chat_history_summary(chat_history, question):
         [/INST]
     """
 
-    summary = complete(st.session_state.model_name, prompt)
+    summary = completee(st.session_state.model_name, prompt)
 
     if st.session_state.debug:
         st.sidebar.text_area(
@@ -301,7 +301,7 @@ def main():
             question = question.replace("'", "")
             prompt, results = create_prompt(question)
             with st.spinner("Thinking..."):
-                generated_response = complete(
+                generated_response = completee(
                     st.session_state.model_name, prompt
                 )
                 # build references list for citation
@@ -327,6 +327,8 @@ def main():
         st.session_state.messages.append(
             {"role": "assistant", "content": generated_response}
         )
+
+
 def get_snowflake_session():
     # get connection parameters from secrets
     params = st.secrets["connections"]["snowflake"]
