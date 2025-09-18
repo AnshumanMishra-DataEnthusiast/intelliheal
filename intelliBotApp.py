@@ -270,7 +270,7 @@ def create_prompt(user_question):
 
 
 def main():
-    st.title(f":speech_balloon: Hello ")
+    st.title(f":speech_balloon: Hello, I am your IntelliHeal Tech AI Assistant. I am happy to assist you with your questions about IT policies and procedures")
 
     init_service_metadata()
     init_config_options()
