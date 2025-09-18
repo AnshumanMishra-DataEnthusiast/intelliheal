@@ -162,7 +162,7 @@ def completee(model, prompt):
         str: The generated completion.
     """
     # session = get_active_session()
-    return complete(model, prompt).replace("$", r"\$")
+    return complete(model, prompt, session=get_snowflake_session()).replace("$", r"\$")
 
 
 def make_chat_history_summary(chat_history, question):
@@ -193,7 +193,7 @@ def make_chat_history_summary(chat_history, question):
         [/INST]
     """
 
-    summary = completee(st.session_state.model_name, prompt, session=get_snowflake_session())
+    summary = completee(st.session_state.model_name, prompt)
 
     if st.session_state.debug:
         st.sidebar.text_area(
@@ -300,7 +300,7 @@ def main():
             prompt, results = create_prompt(question)
             with st.spinner("Thinking..."):
                 generated_response = completee(
-                    st.session_state.model_name, prompt, session=get_snowflake_session()
+                    st.session_state.model_name, prompt
                 )
                 # build references list for citation
                 # build references list for citation
