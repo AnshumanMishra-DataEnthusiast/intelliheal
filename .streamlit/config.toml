@@ -1,11 +1,11 @@
 [theme]
-base = "light"
+base = "dark"
 
 # General color setup
-textColor = "#3f3f46"
-primaryColor = "#60a5fa"
-backgroundColor = "#fafafa"
-secondaryBackgroundColor = "#ffffff"
+textColor = "#FAFAFA"
+primaryColor = "#1f77b4"
+backgroundColor = "#0E1117"
+secondaryBackgroundColor = "#111827"
 
 # Widgets
 showWidgetBorder = true
