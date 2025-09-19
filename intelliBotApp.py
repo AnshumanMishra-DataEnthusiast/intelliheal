@@ -3,7 +3,13 @@ from snowflake.core import Root # requires snowflake>=0.8.0
 from snowflake.cortex import complete
 from snowflake.snowpark import Session
 
-
+st.set_page_config(
+    page_title="IntelliHeal-TechBot",         # Title in browser tab
+    page_icon="🌙",              # Favicon
+    layout="wide",               # "centered" (default) or "wide"
+    # initial_sidebar_state="expanded",  # or "collapsed"
+    theme="dark"                 # "light", "dark", or "system"
+)
 
 MODELS = [
     "mistral-large2",
