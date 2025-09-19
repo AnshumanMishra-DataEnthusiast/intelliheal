@@ -270,7 +270,7 @@ def create_prompt(user_question):
 
 def main():
     st.markdown("#### Even Smaller Title")  # H4 size
-    st.title(f":speech_balloon: Hello, I am your IntelliHeal Tech AI Assistant. I am happy to assist you with your questions about IT policies and procedures")
+    st.subheader(f":speech_balloon: Hello, I am your IntelliHeal Tech AI Assistant. I am happy to assist you with your questions about IT policies and procedures")
 
     init_service_metadata()
     init_config_options()
