@@ -4,6 +4,7 @@ from snowflake.cortex import complete
 from snowflake.snowpark import Session
 
 
+
 MODELS = [
     "mistral-large2",
     "llama3.1-70b",
