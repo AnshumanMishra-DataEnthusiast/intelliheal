@@ -275,7 +275,7 @@ def main():
     init_config_options()
     init_messages()
 
-    icons = {"assistant": "💬", "user": "👤"}
+    icons = {"assistant": "💬", "user": "👤", "thinking": "🤔", "thumbsup": "👍🏻", "thumbsdown": "👎🏻"}
      
     # session = get_active_session()
     # Display chat messages from history on app rerun
@@ -295,7 +295,7 @@ def main():
             st.markdown(question.replace("$", r"\$"))
 
         # Display assistant response in chat message container
-        with st.chat_message("assistant", avatar=icons["assistant"]):
+        with st.chat_message("thinking", avatar=icons["thinking"]):
             message_placeholder = st.empty()
             question = question.replace("'", "")
             prompt, results = create_prompt(question)
